@@ -332,14 +332,7 @@ body {
     background: var(--theme-surface-15);
     transform: translateY(-2px);
 }
-.primary-icon-btn {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-}
-.primary-icon-btn:hover {
-    background: var(--accent-hover);
-}
+/* primary icon btn inherited globally by monochrome styling */
 .text-btn {
     background: none;
     border: none;
@@ -566,12 +559,13 @@ body {
 }
 
 /* High-contrast Monochrome Buttons */
-#add-shortcut-btn, #change-bg-btn, #theme-toggle-btn {
+#add-shortcut-btn, #change-bg-btn, #options-toggle-btn, .primary-icon-btn {
     background: var(--text-primary);
     color: var(--bg-dark);
 }
-#add-shortcut-btn:hover, #change-bg-btn:hover, #theme-toggle-btn:hover {
+#add-shortcut-btn:hover, #change-bg-btn:hover, #options-toggle-btn:hover, .primary-icon-btn:hover {
     background: var(--text-primary);
+    transform: translateY(-2px);
     opacity: 0.85;
 }
 
