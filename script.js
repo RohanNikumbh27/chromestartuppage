@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDateDisplay();
     initShortcuts();
     initTodos();
+    initViews();
     initBackground();
 });
 
@@ -374,5 +375,45 @@ function initBackground() {
         // Add a simple pop animation to the button
         changeBtn.style.transform = 'scale(0.9)';
         setTimeout(() => changeBtn.style.transform = '', 150);
+    });
+}
+
+// --- Views & Notes Logic ---
+function initViews() {
+    const tasksBtn = document.getElementById('view-tasks-btn');
+    const notesBtn = document.getElementById('view-notes-btn');
+    const tasksView = document.getElementById('tasks-view');
+    const notesView = document.getElementById('notes-view');
+    const tasksControls = document.getElementById('tasks-header-controls');
+    const textarea = document.getElementById('notes-textarea');
+    
+    const savedView = localStorage.getItem('chromeStartView') || 'tasks';
+    
+    const setView = (view) => {
+        if (view === 'tasks') {
+            tasksBtn.classList.add('active');
+            notesBtn.classList.remove('active');
+            tasksView.classList.remove('hidden-view');
+            notesView.classList.add('hidden-view');
+            tasksControls.style.display = 'flex';
+        } else {
+            notesBtn.classList.add('active');
+            tasksBtn.classList.remove('active');
+            notesView.classList.remove('hidden-view');
+            tasksView.classList.add('hidden-view');
+            tasksControls.style.display = 'none';
+        }
+        localStorage.setItem('chromeStartView', view);
+    };
+
+    tasksBtn.addEventListener('click', () => setView('tasks'));
+    notesBtn.addEventListener('click', () => setView('notes'));
+    
+    setView(savedView);
+
+    // Notes auto-save implementation
+    textarea.value = localStorage.getItem('chromeStartNotes') || '';
+    textarea.addEventListener('input', () => {
+        localStorage.setItem('chromeStartNotes', textarea.value);
     });
 }

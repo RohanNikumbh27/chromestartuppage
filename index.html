@@ -30,30 +30,41 @@
             
         </section>
 
-        <!-- Todo Panel (Half Screen) -->
+        <!-- Main Panel (Half Screen) -->
         <section class="panel todo-panel glass-panel" id="todo-panel">
-            <header class="panel-header">
-                <div class="list-selector-container">
-                    <h2 style="margin: 0; flex-shrink: 0; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-list-check"></i> Tasks</h2>
-                    <div id="lists-scroller" class="lists-scroller"></div>
-                    <button id="add-list-btn" class="icon-btn-small" style="flex-shrink: 0;" aria-label="Add List" title="Add new list"><i class="fa-solid fa-plus"></i></button>
-                    <button id="delete-list-btn" class="icon-btn-small text-danger" style="flex-shrink: 0; color: var(--danger);" aria-label="Delete List" title="Delete this list"><i class="fa-solid fa-trash"></i></button>
+            <header class="panel-header" style="flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0;">
+                    <div class="view-toggle">
+                        <button id="view-tasks-btn" class="view-btn active">Tasks</button>
+                        <button id="view-notes-btn" class="view-btn">Notes</button>
+                    </div>
+                    <div class="list-selector-container" id="tasks-header-controls">
+                        <div id="lists-scroller" class="lists-scroller"></div>
+                        <button id="add-list-btn" class="icon-btn-small" style="flex-shrink: 0;" aria-label="Add List" title="Add new list"><i class="fa-solid fa-plus"></i></button>
+                        <button id="delete-list-btn" class="icon-btn-small text-danger" style="flex-shrink: 0; color: var(--danger);" aria-label="Delete List" title="Delete this list"><i class="fa-solid fa-trash"></i></button>
+                    </div>
                 </div>
                 <span class="date-display" id="date-display"></span>
             </header>
             
-            <form id="todo-form" class="todo-input-group">
-                <input type="text" id="todo-input" class="glass-input" placeholder="What needs to be done..." autocomplete="off">
-                <button type="submit" class="icon-btn primary-icon-btn"><i class="fa-solid fa-arrow-turn-down fa-rotate-90"></i></button>
-            </form>
+            <div id="tasks-view" class="view-container">
+                <form id="todo-form" class="todo-input-group">
+                    <input type="text" id="todo-input" class="glass-input" placeholder="What needs to be done..." autocomplete="off">
+                    <button type="submit" class="icon-btn primary-icon-btn"><i class="fa-solid fa-arrow-turn-down fa-rotate-90"></i></button>
+                </form>
 
-            <ul class="todo-list" id="todo-list">
-                <!-- Todos injected here via JS -->
-            </ul>
-            
-            <div class="todo-stats">
-                <span id="todo-count">0 items left</span>
-                <button id="clear-completed" class="text-btn">Clear Completed</button>
+                <ul class="todo-list" id="todo-list">
+                    <!-- Todos injected here via JS -->
+                </ul>
+                
+                <div class="todo-stats">
+                    <span id="todo-count">0 items left</span>
+                    <button id="clear-completed" class="text-btn">Clear Completed</button>
+                </div>
+            </div>
+
+            <div id="notes-view" class="view-container hidden-view">
+                <textarea id="notes-textarea" class="notes-textarea" placeholder="Start typing..."></textarea>
             </div>
         </section>
 
