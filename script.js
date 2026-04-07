@@ -40,10 +40,11 @@ function initDateDisplay() {
 
 // --- Shortcuts Logic ---
 const defaultShortcuts = [
-    { id: '1', name: 'GitHub', url: 'https://github.com', icon: 'fa-brands fa-github' },
-    { id: '2', name: 'YouTube', url: 'https://youtube.com', icon: 'fa-brands fa-youtube' },
-    { id: '3', name: 'Twitter', url: 'https://twitter.com', icon: 'fa-brands fa-twitter' },
-    { id: '4', name: 'Gmail', url: 'https://mail.google.com', icon: 'fa-solid fa-envelope' },
+    { id: '1', name: 'YouTube', url: 'https://youtube.com', icon: 'fa-brands fa-youtube' },
+    { id: '2', name: 'Gmail', url: 'https://mail.google.com', icon: 'fa-solid fa-envelope' },
+    { id: '3', name: 'LinkedIn', url: 'https://linkedin.com', icon: 'fa-brands fa-linkedin' },
+    { id: '4', name: 'GitHub', url: 'https://github.com', icon: 'fa-brands fa-github' },
+    { id: '5', name: 'WhatsApp', url: 'https://web.whatsapp.com', icon: 'fa-brands fa-whatsapp' },
 ];
 
 function initShortcuts() {
