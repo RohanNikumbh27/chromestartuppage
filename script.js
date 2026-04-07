@@ -60,8 +60,12 @@ function initShortcuts() {
     const saveBtn = document.getElementById('save-shortcut');
     const nameInput = document.getElementById('shortcut-name');
     const urlInput = document.getElementById('shortcut-url');
+    let editingShortcutId = null;
+    const modalHeader = modal.querySelector('h3');
 
     addBtn.addEventListener('click', () => {
+        editingShortcutId = null;
+        modalHeader.textContent = 'Add New Shortcut';
         modal.classList.remove('hidden');
         nameInput.focus();
     });
@@ -70,6 +74,7 @@ function initShortcuts() {
         modal.classList.add('hidden');
         nameInput.value = '';
         urlInput.value = '';
+        editingShortcutId = null;
     };
 
     cancelBtn.addEventListener('click', closeModal);
@@ -86,22 +91,33 @@ function initShortcuts() {
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
             }
-            const newShortcut = {
-                id: Date.now().toString(),
-                name,
-                url,
-                icon: 'fa-solid fa-globe' // Generic icon for custom
-            };
-            shortcuts.push(newShortcut);
+            
+            if (editingShortcutId) {
+                const idx = shortcuts.findIndex(s => s.id === editingShortcutId);
+                if (idx > -1) {
+                    shortcuts[idx].name = name;
+                    shortcuts[idx].url = url;
+                }
+            } else {
+                const newShortcut = {
+                    id: Date.now().toString(),
+                    name,
+                    url,
+                    icon: 'fa-solid fa-globe'
+                };
+                shortcuts.push(newShortcut);
+            }
+            
             saveShortcuts(shortcuts);
             renderShortcuts(shortcuts);
             closeModal();
         }
     });
 
-    // Delegate delete events
+    // Delegate edit/delete events
     document.getElementById('shortcuts-grid').addEventListener('click', (e) => {
         const deleteBtn = e.target.closest('.delete-shortcut');
+        const editBtn = e.target.closest('.edit-shortcut');
         if (deleteBtn) {
             e.preventDefault(); // Stop navigation
             e.stopPropagation();
@@ -109,6 +125,18 @@ function initShortcuts() {
             shortcuts = shortcuts.filter(s => s.id !== id);
             saveShortcuts(shortcuts);
             renderShortcuts(shortcuts);
+        } else if (editBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            editingShortcutId = editBtn.dataset.id;
+            const target = shortcuts.find(s => s.id === editingShortcutId);
+            if (target) {
+                nameInput.value = target.name;
+                urlInput.value = target.url;
+                modalHeader.textContent = 'Edit Shortcut';
+                modal.classList.remove('hidden');
+                nameInput.focus();
+            }
         }
     });
 }
@@ -130,6 +158,9 @@ function renderShortcuts(shortcuts) {
                 <i class="${shortcut.icon}"></i>
             </div>
             <span class="shortcut-name">${shortcut.name}</span>
+            <button class="edit-shortcut" data-id="${shortcut.id}" aria-label="Edit">
+                <i class="fa-solid fa-pen"></i>
+            </button>
             <button class="delete-shortcut" data-id="${shortcut.id}" aria-label="Delete">
                 <i class="fa-solid fa-xmark"></i>
             </button>
