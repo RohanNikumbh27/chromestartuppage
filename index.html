@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="overlay"></div>
+
+    <main class="container">
+        
+        <!-- Shortcuts Panel (Half Screen) -->
+        <section class="panel shortcuts-panel" id="shortcuts-panel">
+            <header class="panel-header">
+                <h2><i class="fa-solid fa-compass"></i> Shortcuts</h2>
+                <button id="add-shortcut-btn" class="icon-btn" aria-label="Add Shortcut">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </header>
+            <div class="shortcuts-grid" id="shortcuts-grid">
+                <!-- Shortcuts injected here via JS -->
+            </div>
+            
+        </section>
+
+        <!-- Todo Panel (Half Screen) -->
+        <section class="panel todo-panel glass-panel" id="todo-panel">
+            <header class="panel-header">
+                <div class="list-selector-container">
+                    <h2 style="margin: 0; flex-shrink: 0; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-list-check"></i> Tasks</h2>
+                    <div id="lists-scroller" class="lists-scroller"></div>
+                    <button id="add-list-btn" class="icon-btn-small" style="flex-shrink: 0;" aria-label="Add List" title="Add new list"><i class="fa-solid fa-plus"></i></button>
+                    <button id="delete-list-btn" class="icon-btn-small text-danger" style="flex-shrink: 0; color: var(--danger);" aria-label="Delete List" title="Delete this list"><i class="fa-solid fa-trash"></i></button>
+                </div>
+                <span class="date-display" id="date-display"></span>
+            </header>
+            
+            <form id="todo-form" class="todo-input-group">
+                <input type="text" id="todo-input" class="glass-input" placeholder="What needs to be done..." autocomplete="off">
+                <button type="submit" class="icon-btn primary-icon-btn"><i class="fa-solid fa-arrow-turn-down fa-rotate-90"></i></button>
+            </form>
+
+            <ul class="todo-list" id="todo-list">
+                <!-- Todos injected here via JS -->
+            </ul>
+            
+            <div class="todo-stats">
+                <span id="todo-count">0 items left</span>
+                <button id="clear-completed" class="text-btn">Clear Completed</button>
+            </div>
+        </section>
+
+        <!-- Add List Modal -->
+        <div id="list-modal" class="modal hidden">
+            <div class="modal-content glass-panel">
+                <h3>Create New List</h3>
+                <input type="text" id="list-name" class="glass-input" placeholder="List Name (e.g. Fitness)">
+                <div class="modal-actions">
+                    <button id="cancel-list" class="btn btn-secondary">Cancel</button>
+                    <button id="save-list" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modals -->
+    <!-- Add Shortcut Modal -->
+    <div id="shortcut-modal" class="modal hidden">
+        <div class="modal-content glass-panel">
+            <h3>Add New Shortcut</h3>
+            <input type="text" id="shortcut-name" class="glass-input" placeholder="Name (e.g. YouTube)">
+            <input type="url" id="shortcut-url" class="glass-input" placeholder="URL (e.g. https://youtube.com)">
+            <div class="modal-actions">
+                <button id="cancel-shortcut" class="btn btn-secondary">Cancel</button>
+                <button id="save-shortcut" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating action buttons -->
+    <div class="floating-actions" style="position: fixed; bottom: 2rem; left: 2rem; z-index: 50; display: flex; gap: 1rem;">
+        <!-- Change Background Image Button -->
+        <button id="change-bg-btn" class="icon-btn" aria-label="Change Background Image" title="Change Background Image">
+            <i class="fa-solid fa-image"></i>
+        </button>
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Dark Mode" title="Toggle Dark/Light Theme">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
