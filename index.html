@@ -97,15 +97,35 @@
     </div>
 
     <!-- Floating action buttons -->
-    <div class="floating-actions" style="position: fixed; bottom: 2rem; left: 2rem; z-index: 50; display: flex; gap: 1rem;">
+    <div class="floating-actions" style="position: fixed; bottom: 2rem; left: 2rem; z-index: 50; display: flex; gap: 1rem; align-items: flex-end;">
         <!-- Change Background Image Button -->
         <button id="change-bg-btn" class="icon-btn" aria-label="Change Background Image" title="Change Background Image">
             <i class="fa-solid fa-image"></i>
         </button>
-        <!-- Theme Toggle Button -->
-        <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Dark Mode" title="Toggle Dark/Light Theme">
-            <i class="fa-solid fa-moon"></i>
-        </button>
+        <!-- Options Dropdown -->
+        <div class="options-container" style="position: relative;">
+            <button id="options-toggle-btn" class="icon-btn" aria-label="Options" title="Settings">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+            <div id="options-menu" class="options-menu glass-panel hidden">
+                <div class="options-item" id="dark-mode-item" style="cursor: pointer;">
+                    <span>Dark Mode</span>
+                    <i class="fa-solid fa-moon" id="dark-mode-icon"></i>
+                </div>
+                <div class="options-divider"></div>
+                <div class="options-item-col">
+                    <span style="font-size: 0.85em; color: var(--text-muted); display: block; margin-bottom: 8px;">Accent Color</span>
+                    <div class="color-swatches">
+                        <button class="color-swatch" data-color="#f59e0b" style="background: #f59e0b;" aria-label="Amber"></button>
+                        <button class="color-swatch" data-color="#E50914" style="background: #E50914;" aria-label="Netflix Red"></button>
+                        <button class="color-swatch" data-color="#7928ca" style="background: #7928ca;" aria-label="Dark Violet"></button>
+                        <div class="custom-color-wrapper color-swatch" id="custom-color-wrapper" style="position: relative; overflow: hidden; background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);" title="Custom Color">
+                            <input type="color" id="custom-color-picker" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

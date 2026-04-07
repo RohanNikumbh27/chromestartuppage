@@ -7,28 +7,106 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackground();
 });
 
-// --- Theme Logic ---
+// --- Theme & Options Logic ---
 function initThemeSettings() {
-    const themeBtn = document.getElementById('theme-toggle-btn');
-    const icon = themeBtn.querySelector('i');
+    const optionsToggleBtn = document.getElementById('options-toggle-btn');
+    const optionsMenu = document.getElementById('options-menu');
+    const darkModeItem = document.getElementById('dark-mode-item');
+    const darkModeIcon = document.getElementById('dark-mode-icon');
     
+    // Toggle Menu
+    optionsToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        optionsMenu.classList.toggle('hidden');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!optionsToggleBtn.contains(e.target) && !optionsMenu.contains(e.target)) {
+            optionsMenu.classList.add('hidden');
+        }
+    });
+
+    // 1. Dark Mode Logic
     let currentTheme = localStorage.getItem('chromeStartTheme') || 'light';
     if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        icon.classList.replace('fa-moon', 'fa-sun');
+        darkModeIcon.classList.replace('fa-moon', 'fa-sun');
     }
     
-    themeBtn.addEventListener('click', () => {
+    darkModeItem.addEventListener('click', () => {
         currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         if (currentTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
-            icon.classList.replace('fa-moon', 'fa-sun');
+            darkModeIcon.classList.replace('fa-moon', 'fa-sun');
         } else {
             document.documentElement.removeAttribute('data-theme');
-            icon.classList.replace('fa-sun', 'fa-moon');
+            darkModeIcon.classList.replace('fa-sun', 'fa-moon');
         }
         localStorage.setItem('chromeStartTheme', currentTheme);
     });
+
+    // 2. Accent Color Logic
+    const swatches = document.querySelectorAll('.color-swatch');
+    const rootStyles = document.documentElement.style;
+    const currentAccent = localStorage.getItem('chromeStartAccent') || '#f59e0b';
+    
+    const customColorPicker = document.getElementById('custom-color-picker');
+    const customColorWrapper = document.getElementById('custom-color-wrapper');
+    
+    const hoverHues = {
+        '#f59e0b': '#d97706',
+        '#E50914': '#b91c1c',
+        '#7928ca': '#5b21b6'
+    };
+
+    const applyAccent = (color, activeSwatch) => {
+        rootStyles.setProperty('--accent', color);
+        if (hoverHues[color]) {
+            rootStyles.setProperty('--accent-hover', hoverHues[color]);
+        } else {
+            rootStyles.setProperty('--accent-hover', color);
+        }
+        localStorage.setItem('chromeStartAccent', color);
+        
+        swatches.forEach(s => s.classList.remove('active'));
+        if (activeSwatch) activeSwatch.classList.add('active');
+    };
+
+    // Initialize layout
+    let foundPreset = false;
+    swatches.forEach(sw => {
+        if(sw.dataset.color && sw.dataset.color.toLowerCase() === currentAccent.toLowerCase()) {
+            sw.classList.add('active');
+            foundPreset = true;
+        }
+    });
+
+    if (!foundPreset) {
+        customColorPicker.value = currentAccent;
+        customColorWrapper.classList.add('active');
+    }
+
+    // Call once to inject actual root bindings safely on load
+    rootStyles.setProperty('--accent', currentAccent);
+    if(hoverHues[currentAccent]) rootStyles.setProperty('--accent-hover', hoverHues[currentAccent]);
+    else rootStyles.setProperty('--accent-hover', currentAccent);
+
+    // Bind Presets
+    swatches.forEach(swatch => {
+        if (swatch.dataset.color) {
+            swatch.addEventListener('click', (e) => {
+                e.stopPropagation();
+                applyAccent(swatch.dataset.color, swatch);
+            });
+        }
+    });
+
+    // Bind Custom Picker
+    customColorPicker.addEventListener('input', (e) => {
+        applyAccent(e.target.value, customColorWrapper);
+    });
+    customColorPicker.addEventListener('click', (e) => e.stopPropagation());
 }
 
 // --- Date Display ---
