@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -58,7 +59,7 @@
                 </ul>
                 
                 <div class="todo-stats">
-                    <span id="todo-count">0 items left</span>
+                    <span id="todo-signature" class="signature">Rohan Nikumbh</span>
                     <button id="clear-completed" class="text-btn">Clear Completed</button>
                 </div>
             </div>
@@ -98,16 +99,16 @@
 
     <!-- Floating action buttons -->
     <div class="floating-actions" style="position: fixed; bottom: 2rem; left: 2rem; z-index: 50; display: flex; gap: 1rem; align-items: flex-end;">
-        <!-- Change Background Image Button -->
-        <button id="change-bg-btn" class="icon-btn" aria-label="Change Background Image" title="Change Background Image">
-            <i class="fa-solid fa-image"></i>
-        </button>
         <!-- Options Dropdown -->
         <div class="options-container" style="position: relative;">
             <button id="options-toggle-btn" class="icon-btn" aria-label="Options" title="Settings">
                 <i class="fa-solid fa-gear"></i>
             </button>
             <div id="options-menu" class="options-menu glass-panel hidden">
+                <div class="options-item" id="open-bg-modal-item" style="cursor: pointer;">
+                    <span>Background</span>
+                    <i class="fa-solid fa-image"></i>
+                </div>
                 <div class="options-item" id="dark-mode-item" style="cursor: pointer;">
                     <span>Dark Mode</span>
                     <i class="fa-solid fa-moon" id="dark-mode-icon"></i>
@@ -124,6 +125,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Shuffle Background Image Button -->
+        <button id="change-bg-btn" class="icon-btn" aria-label="Shuffle Background Image" title="Shuffle Background Image">
+            <i class="fa-solid fa-shuffle"></i>
+        </button>
+    </div>
+
+    <!-- Background Selector Modal -->
+    <div id="bg-selector-modal" class="modal hidden">
+        <div class="modal-content glass-panel" style="max-width: 600px; width: 90%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0;">Select Background</h3>
+                <button id="close-bg-modal-btn" class="icon-btn-small" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="bg-grid" class="bg-grid">
+                <!-- Swatches injected via JS -->
             </div>
         </div>
     </div>

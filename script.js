@@ -403,7 +403,6 @@ function saveTodos(newTodos) {
 
 function renderTodos() {
     const list = document.getElementById('todo-list');
-    const countDisplay = document.getElementById('todo-count');
     list.innerHTML = '';
 
     const currentTodos = todos.filter(t => t.listId === currentListId);
@@ -420,9 +419,6 @@ function renderTodos() {
         `;
         list.appendChild(li);
     });
-
-    const activeCount = currentTodos.filter(t => !t.completed).length;
-    countDisplay.textContent = `${activeCount} item${activeCount !== 1 ? 's' : ''} left`;
 }
 
 // --- Background Logic ---
@@ -440,20 +436,63 @@ function initBackground() {
         const imagePath = localImages[index];
         bgElement.style.backgroundImage = `url('${imagePath}')`;
         localStorage.setItem('chromeStartBgIndex', index);
+        currentImageIndex = index;
     }
     
     // Apply initial background
     setBackground(currentImageIndex);
 
-    changeBtn.addEventListener('click', () => {
-        // Pick the next image in sequence
-        currentImageIndex = (currentImageIndex + 1) % localImages.length;
-        setBackground(currentImageIndex);
-        
-        // Add a simple pop animation to the button
-        changeBtn.style.transform = 'scale(0.9)';
-        setTimeout(() => changeBtn.style.transform = '', 150);
-    });
+    if (changeBtn) {
+        changeBtn.addEventListener('click', () => {
+            // Pick the next image in sequence
+            let nextIndex = (currentImageIndex + 1) % localImages.length;
+            setBackground(nextIndex);
+            
+            // Highlight the active thumbnail if modal is open
+            document.querySelectorAll('.bg-thumbnail').forEach((t, idx) => {
+                if (idx === nextIndex) t.classList.add('active');
+                else t.classList.remove('active');
+            });
+            
+            // Add a simple pop animation to the button
+            changeBtn.style.transform = 'scale(0.9)';
+            setTimeout(() => changeBtn.style.transform = '', 150);
+        });
+    }
+
+    const openBtn = document.getElementById('open-bg-modal-item');
+    const closeBtn = document.getElementById('close-bg-modal-btn');
+    const bgModal = document.getElementById('bg-selector-modal');
+    const bgGrid = document.getElementById('bg-grid');
+    const optionsMenu = document.getElementById('options-menu');
+
+    if (openBtn && bgModal) {
+        openBtn.addEventListener('click', () => {
+            optionsMenu.classList.add('hidden');
+            bgModal.classList.remove('hidden');
+        });
+
+        const closeBgModal = () => bgModal.classList.add('hidden');
+        closeBtn.addEventListener('click', closeBgModal);
+        bgModal.addEventListener('click', (e) => {
+            if (e.target === bgModal) closeBgModal();
+        });
+
+        bgGrid.innerHTML = '';
+        localImages.forEach((img, i) => {
+            const thumb = document.createElement('div');
+            thumb.className = `bg-thumbnail ${i === currentImageIndex ? 'active' : ''}`;
+            thumb.style.backgroundImage = `url('${img}')`;
+            
+            thumb.addEventListener('click', () => {
+                setBackground(i);
+                document.querySelectorAll('.bg-thumbnail').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            });
+            
+            bgGrid.appendChild(thumb);
+        });
+    }
 }
 
 // --- Views & Notes Logic ---

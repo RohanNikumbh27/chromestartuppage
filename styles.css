@@ -447,8 +447,8 @@ body {
     display: flex;
     align-items: center;
     padding: 1rem;
-    background: #000000;
-    color: var(--accent);
+    background: var(--theme-surface-5);
+    color: var(--text-primary);
     border: none;
     border-radius: var(--radius-sm);
     margin-bottom: 0.75rem;
@@ -456,7 +456,7 @@ body {
 }
 
 .todo-item:hover {
-    background: #111111;
+    background: var(--theme-surface-15);
     transform: translateX(4px);
 }
 
@@ -532,6 +532,16 @@ body {
     color: var(--text-muted);
 }
 
+.signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+    letter-spacing: 1.5px;
+    margin-left: 0.5rem;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -559,11 +569,11 @@ body {
 }
 
 /* High-contrast Monochrome Buttons */
-#add-shortcut-btn, #change-bg-btn, #options-toggle-btn, .primary-icon-btn {
+#add-shortcut-btn, #options-toggle-btn, .primary-icon-btn {
     background: var(--text-primary);
     color: var(--bg-dark);
 }
-#add-shortcut-btn:hover, #change-bg-btn:hover, #options-toggle-btn:hover, .primary-icon-btn:hover {
+#add-shortcut-btn:hover, #options-toggle-btn:hover, .primary-icon-btn:hover {
     background: var(--text-primary);
     transform: translateY(-2px);
     opacity: 0.85;
@@ -705,4 +715,43 @@ body {
 .color-swatch.active {
     opacity: 1;
     box-shadow: 0 0 0 2px var(--bg-dark), 0 0 0 4px var(--text-primary);
+}
+
+/* Background Selector Grid */
+.bg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Custom scrollbar for grid */
+.bg-grid::-webkit-scrollbar {
+    width: 6px;
+}
+.bg-grid::-webkit-scrollbar-thumb {
+    background-color: var(--theme-surface-15);
+    border-radius: 4px;
+}
+
+.bg-thumbnail {
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.bg-thumbnail:hover {
+    transform: scale(1.05);
+}
+
+.bg-thumbnail.active {
+    border-color: var(--accent);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
